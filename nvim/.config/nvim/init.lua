@@ -637,6 +637,7 @@ require('lazy').setup({
       local servers = {
         clangd = {},
         gopls = {},
+        terraformls = {},
         -- pyright = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
@@ -739,6 +740,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        terraform = { 'terraformls' },
         -- Conform can also run multiple formatters sequentially
         -- python = { "isort", "black" },
         --
