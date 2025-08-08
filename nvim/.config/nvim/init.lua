@@ -679,28 +679,7 @@ require('lazy').setup({
           },
         },
       }
-
-      -- after `local servers = { ... terraformls = {}, ... }`
-      local lspconfig = require 'lspconfig'
-      require('mason-lspconfig').setup {
-        ensure_installed = vim.tbl_keys(servers),
-      }
-
-      require('mason-lspconfig').setup_handlers {
-        function(server_name)
-          local cfg = servers[server_name] or {}
-          -- robust root for new files too
-          if server_name == 'terraformls' then
-            local util = require 'lspconfig.util'
-            cfg.root_dir = function(fname)
-              return util.root_pattern('.terraform', '.git', '.tflint.hcl', 'terraform.rc')(fname) or util.path.dirname(fname) -- fallback so new, empty dirs still start
-            end
-            cfg.filetypes = { 'terraform', 'terraform-vars', 'hcl' }
-          end
-          lspconfig[server_name].setup(cfg)
-        end,
-      }
-
+      ---
       ---@type MasonLspconfigSettings
       ---@diagnostic disable-next-line: missing-fields
       require('mason-lspconfig').setup {
