@@ -10,4 +10,4 @@
 [init]
 	defaultBranch = main
 [core]
-	excludesFile = /home/louis/.gitignore_global
+	excludesFile = ~/.gitignore_global
