@@ -11,6 +11,8 @@ end
 # Common path
 set -gx PATH $HOME/go/bin $PATH
 
+set -gx KUBECONFIG $HOME/.kube/config
+
 starship init fish | source
 
 source $HOME/.config/fish/conf.d/abbr.fish
