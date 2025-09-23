@@ -2,7 +2,7 @@
 set -gx EDITOR nvim
 
 if test (uname) = "Darwin"
-    set -gx PATH /opt/homebrew/bin /opt/homebrew/opt/make/libexec/gnubin $PATH
+    set -gx PATH /opt/homebrew/bin /opt/homebrew/opt/make/libexec/gnubin /opt/homebrew/opt/llvm/bin $PATH
 else if test (uname) = "Linux"
     set -gx PATH /opt/nvim-linux-x86_64/bin /usr/local/go/bin $HOME/.local/bin $PATH
     set -gx GOPATH $HOME/go
