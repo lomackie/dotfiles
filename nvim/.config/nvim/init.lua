@@ -150,39 +150,10 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'go',
   callback = function()
-    vim.keymap.set('n', '<leader>ee', 'oif err != nil {<CR>}<Esc>Oreturn err<Esc>j$', { buffer = true })
+    vim.keymap.set('n', '<leader>ee', '<cmd>GoIfErr<CR>', { buffer = true, desc = 'Go: Insert if err != nil' })
   end,
 })
 
--- Fix imports on save
-
-vim.api.nvim_create_autocmd('BufWritePre', {
-  pattern = '*.go',
-  callback = function()
-    local params = {
-      context = { only = { 'source.organizeImports' }, diagnostics = {} },
-      textDocument = vim.lsp.util.make_text_document_params(),
-    }
-
-    local result = vim.lsp.buf_request_sync(0, 'textDocument/codeAction', params, 1000)
-    if not result then
-      return
-    end
-
-    for client_id, res in pairs(result) do
-      for _, action in pairs(res.result or {}) do
-        if action.edit then
-          vim.lsp.util.apply_workspace_edit(action.edit, 'utf-16')
-        elseif action.command then
-          local client = vim.lsp.get_client_by_id(client_id)
-          if client and client.execute_command then
-            client.execute_command(client, action.command)
-          end
-        end
-      end
-    end
-  end,
-})
 
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   pattern = { '*.tf', '*.tfvars', '*.hcl' },
@@ -702,7 +673,8 @@ require('lazy').setup({
       -- for you, so that they are available from within Neovim.
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
-        'stylua', -- Used to format Lua code
+        'stylua',
+        'goimports',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -749,6 +721,7 @@ require('lazy').setup({
       end,
       formatters_by_ft = {
         lua = { 'stylua' },
+        go = { 'goimports' },
         terraform = { 'terraform_fmt' },
         gcl = { 'terraform_fmt' },
         -- Conform can also run multiple formatters sequentially
