@@ -154,7 +154,6 @@ vim.api.nvim_create_autocmd('FileType', {
   end,
 })
 
-
 vim.api.nvim_create_autocmd({ 'BufRead', 'BufNewFile' }, {
   pattern = { '*.tf', '*.tfvars', '*.hcl' },
   callback = function()
@@ -618,7 +617,7 @@ require('lazy').setup({
         terraformls = {},
         yamlls = {},
         -- pyright = {},
-        -- rust_analyzer = {},
+        rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
