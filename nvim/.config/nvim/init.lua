@@ -83,6 +83,9 @@ vim.o.scrolloff = 10
 -- See `:help 'confirm'`
 vim.o.confirm = true
 
+vim.o.title = true
+vim.o.titlestring = '%f'
+
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
 
